@@ -50,6 +50,16 @@ impl Dfa {
         );
     }
 
+    pub fn to_string(&self) -> String {
+        let states = self.states
+            .iter()
+            .map(|state| state.to_string())
+            .collect::<Vec<String>>()
+            .join("\n");
+
+        return format!("{}\n{}\n{}", self.states.len(), self.initial_state, states);
+    }
+
     fn transitions_ended_in_final_state(&self, input: &String, transitions: &TransitionsLog) -> bool {
         self
             .get_state_with_label(transitions.get_last_transition_or_(self.initial_state))
@@ -218,5 +228,18 @@ Input is REJECTED"))
         ]);
 
         assert_eq!(dfa1.eq(&dfa2), true)
+    }
+
+    #[test]
+    fn it_can_be_converted_into_string() {
+        let dfa1= get_sample_dfa();
+        let string_representation = String::from("4
+0
+0 0 2 a 1 b 3
+1 1 2 a 1 b 2
+2 1 2 a 1 b 3
+3 0 2 a 3 b 3");
+
+        assert_eq!(dfa1.to_string(), string_representation)
     }
 }

@@ -38,6 +38,10 @@ impl State {
     pub fn get_transition_for(&self, symbol: char) -> Option<u32> {
         self.transitions.get_transition_for(symbol)
     }
+
+    pub fn to_string(&self) -> String {
+        format!("{} {} {} {}", self.label, if self.is_final { 1 } else { 0 }, self.transitions.count(),  self.transitions.to_string())
+    }
 }
 
 
@@ -91,5 +95,13 @@ mod tests {
         ]));
 
         assert_eq!(state1.equal(&state2), false)
+    }
+
+    #[test]
+    fn it_can_be_converted_to_string () {
+        let state1= get_sample_state();
+        let expected_string = String::from("0 0 2 a 1 b 3");
+
+        assert_eq!(state1.to_string(), expected_string)
     }
 }

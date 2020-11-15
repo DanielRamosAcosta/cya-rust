@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Transition {
     symbol: char,
     pub destination_state: u32,
@@ -18,6 +19,10 @@ impl Transition {
 
     pub fn eq(&self, other: &Transition) -> bool {
         self.has_same_symbol(&other) && self.destination_state.eq(&other.destination_state)
+    }
+
+    pub fn to_string(&self) -> String {
+        format!("{} {}", self.symbol, self.destination_state)
     }
 }
 
@@ -47,5 +52,12 @@ mod tests {
         let transition2 = Transition::new('a', 2);
 
         assert_eq!(transition1.eq(&transition2), false)
+    }
+
+    #[test]
+    fn it_can_be_represented_as_string() {
+        let transition = Transition::new('a', 1);
+
+        assert_eq!(transition.to_string(), "a 1")
     }
 }

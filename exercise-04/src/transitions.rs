@@ -30,6 +30,18 @@ impl Transitions {
             .map(|x| x.destination_state)
     }
 
+    pub fn count(&self) -> usize {
+        self.transitions.len()
+    }
+
+    pub fn to_string(&self) -> String {
+        self.transitions
+            .iter()
+            .map(|transition| transition.to_string())
+            .collect::<Vec<String>>()
+            .join(" ")
+    }
+
     fn same_amount_of_transitions(&self, other: &Transitions) -> bool {
         self.transitions.len().eq(&other.transitions.len())
     }
