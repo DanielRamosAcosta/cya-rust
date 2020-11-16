@@ -1,5 +1,7 @@
 use crate::transitions::Transitions;
+use crate::transition::Transition;
 
+#[derive(Clone)]
 pub struct State {
     id: u32,
     is_final: bool,
@@ -17,5 +19,17 @@ impl State {
             is_final,
             transitions,
         }
+    }
+
+    pub fn find_transition_for(&self, symbol: char) -> Option<&Transition> {
+        self.transitions.find_transition_for(symbol)
+    }
+
+    pub fn has_id(&self, id: u32) -> bool {
+        self.id.eq(&id)
+    }
+
+    pub fn is_final_state(&self) -> bool {
+        self.is_final
     }
 }

@@ -1,21 +1,29 @@
 use crate::transitions::Transitions;
 use crate::movement::Movement;
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Tape {
     rail: Vec<char>,
     head: usize,
 }
 
 impl Tape {
-    pub fn from_string(string: &str) -> Tape {
+    pub fn from_string_padded_with_blanks(string: &str) -> Tape {
+        Tape::from_string_head_at(&format!("${}$", string), 1)
+    }
+
+    pub fn from_string(string: &String) -> Tape {
         Tape::from_string_head_at(string, 0)
     }
 
-    pub fn from_string_head_at(string: &str, head: usize) -> Tape {
+    pub fn from_string_head_at(string: &String, head: usize) -> Tape {
         let chars = string.chars().collect::<Vec<char>>();
 
         Tape::new(chars, head)
+    }
+
+    pub fn read(&self) -> char {
+        self.rail.get(self.head).unwrap().clone()
     }
 
     pub fn new(rail: Vec<char>, head: usize) -> Tape {
@@ -81,7 +89,7 @@ mod tests {
 
     #[test]
     fn it_can_be_represented_as_string() {
-        let tape = Tape::from_string("000111");
+        let tape = Tape::from_string(&"000111".to_string());
 
         let result = tape.to_string();
 
@@ -93,7 +101,7 @@ mod tests {
 
     #[test]
     fn head_can_be_moved_right() {
-        let tape = Tape::from_string("000111");
+        let tape = Tape::from_string(&"000111".to_string());
 
         let result = tape.mov(Movement::RIGHT);
 
@@ -103,7 +111,7 @@ mod tests {
 
     #[test]
     fn head_can_be_moved_left() {
-        let tape = Tape::from_string_head_at("000111", 2);
+        let tape = Tape::from_string_head_at(&"000111".to_string(), 2);
 
         let result = tape.mov(Movement::LEFT);
 
@@ -113,7 +121,7 @@ mod tests {
 
     #[test]
     fn head_can_be_moved_a_lot() {
-        let tape = Tape::from_string("000111");
+        let tape = Tape::from_string(&"000111".to_string());
 
         Tape::mov(&tape, Movement::RIGHT);
         tape.mov(Movement::RIGHT);
@@ -132,7 +140,7 @@ mod tests {
 
     #[test]
     fn write_works_at_start() {
-        let tape = Tape::from_string("000111");
+        let tape = Tape::from_string(&"000111".to_string());
 
         let result = tape.write('X');
 
@@ -141,7 +149,7 @@ mod tests {
 
     #[test]
     fn write_works_with_moved_head() {
-        let tape = Tape::from_string("000111");
+        let tape = Tape::from_string(&"000111".to_string());
 
         let result = tape.mov(Movement::RIGHT).write('X');
 

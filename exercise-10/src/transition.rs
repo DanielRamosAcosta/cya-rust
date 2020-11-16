@@ -1,6 +1,6 @@
 use crate::movement::Movement;
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub struct Transition {
     pub read: char,
     pub write: char,
@@ -21,5 +21,9 @@ impl Transition {
             movement,
             destination_state,
         }
+    }
+
+    pub fn is_for(&self, symbol: char) -> bool {
+        self.read == symbol
     }
 }

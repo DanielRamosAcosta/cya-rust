@@ -1,4 +1,5 @@
 use crate::state::State;
+use crate::transitions::Transitions;
 
 pub struct States {
     states: Vec<State>,
@@ -7,5 +8,12 @@ pub struct States {
 impl States {
     pub fn new(states: Vec<State>) -> States {
         States { states }
+    }
+
+    pub fn state_with_id(&self, id: u32) -> Option<State> {
+        self.states
+            .iter()
+            .find(|s| s.has_id(id))
+            .map(|s| s.clone() as State)
     }
 }
