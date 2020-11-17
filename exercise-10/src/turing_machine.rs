@@ -126,7 +126,8 @@ mod tests {
         let tm = get_sample_turing_machine();
 
         let tapes = tm.execute(&String::from("01"));
-        let last = tapes.unwrap().last().unwrap();
+        let tapes_option = tapes.unwrap();
+        let last = tapes_option.last().unwrap();
 
         assert_eq!(last.rail_to_string(), "$XY$");
         assert_eq!(last.head_to_string(), "  ^ ");
