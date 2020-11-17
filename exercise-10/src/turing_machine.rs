@@ -2,7 +2,6 @@ use crate::states::States;
 use crate::tape::Tape;
 use crate::movement::Movement;
 use crate::state::State;
-use std::os::macos::raw::stat;
 
 pub struct TuringMachine {
     initial_state: u32,
