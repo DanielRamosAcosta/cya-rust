@@ -2,7 +2,7 @@ use crate::transition::Transition;
 
 #[derive(Debug, Clone)]
 pub struct Transitions {
-    pub transitions: Vec<Transition>
+    pub transitions: Vec<Transition>,
 }
 
 impl Transitions {

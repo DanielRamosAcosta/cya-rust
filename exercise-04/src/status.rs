@@ -1,11 +1,11 @@
-use crate::transitions_log::TransitionsLog;
 use crate::transition_log::TransitionLog;
+use crate::transitions_log::TransitionsLog;
 
 #[derive(Debug, Clone)]
 pub struct Status {
     input: String,
     transitions_log: TransitionsLog,
-    is_accepted: bool
+    is_accepted: bool,
 }
 
 impl Status {
@@ -13,7 +13,7 @@ impl Status {
         Status {
             input,
             transitions_log: transitions,
-            is_accepted
+            is_accepted,
         }
     }
 
@@ -38,38 +38,47 @@ mod tests {
 
     #[test]
     fn it_shows_the_input_string() {
-        let result = Status::new(String::from("abaab"), TransitionsLog::new(Vec::new()), false).to_string();
-        
+        let result = Status::new(
+            String::from("abaab"),
+            TransitionsLog::new(Vec::new()),
+            false,
+        )
+        .to_string();
+
         assert!(result.contains("abaab"))
     }
 
     #[test]
     fn it_shows_the_transaction_string() {
-        let transitions = vec![
-            TransitionLog::new(0, 'a', 1),
-            TransitionLog::new(1, 'b', 2)
-        ];
+        let transitions = vec![TransitionLog::new(0, 'a', 1), TransitionLog::new(1, 'b', 2)];
         let result = Status::new(
             String::from("abaab"),
             TransitionsLog::new(transitions),
-            false
-        ).to_string();
-        
+            false,
+        )
+        .to_string();
+
         assert!(result.contains("0              a      1"));
         assert!(result.contains("1              b      2"));
     }
 
     #[test]
     fn it_shows_the_if_its_accepted() {
-        let result = Status::new(String::from("abaab"), TransitionsLog::new(Vec::new()), true).to_string();
-        
+        let result =
+            Status::new(String::from("abaab"), TransitionsLog::new(Vec::new()), true).to_string();
+
         assert!(result.contains("Input is ACCEPTED"))
     }
 
     #[test]
     fn it_shows_the_if_its_rejected() {
-        let result = Status::new(String::from("abaab"), TransitionsLog::new(Vec::new()), false).to_string();
-        
+        let result = Status::new(
+            String::from("abaab"),
+            TransitionsLog::new(Vec::new()),
+            false,
+        )
+        .to_string();
+
         assert!(result.contains("Input is REJECTED"))
     }
 }

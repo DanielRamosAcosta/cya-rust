@@ -9,12 +9,7 @@ pub struct Transition {
 }
 
 impl Transition {
-    pub fn new(
-        read: char,
-        write: char,
-        movement: Movement,
-        destination_state: u32,
-    ) -> Transition {
+    pub fn new(read: char, write: char, movement: Movement, destination_state: u32) -> Transition {
         Transition {
             read,
             write,

@@ -1,5 +1,5 @@
-use crate::transitions::Transitions;
 use crate::transition::Transition;
+use crate::transitions::Transitions;
 
 #[derive(Clone)]
 pub struct State {
@@ -9,11 +9,7 @@ pub struct State {
 }
 
 impl State {
-    pub fn new(
-        id: u32,
-        is_final: bool,
-        transitions: Transitions,
-    ) -> State {
+    pub fn new(id: u32, is_final: bool, transitions: Transitions) -> State {
         State {
             id,
             is_final,

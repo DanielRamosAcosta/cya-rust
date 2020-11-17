@@ -1,11 +1,11 @@
-use crate::states::States;
-use crate::tape::Tape;
 use crate::movement::Movement;
 use crate::state::State;
+use crate::states::States;
+use crate::tape::Tape;
 
 pub struct TuringMachine {
     initial_state: u32,
-    states: States
+    states: States,
 }
 
 pub struct Status {
@@ -15,7 +15,10 @@ pub struct Status {
 
 impl TuringMachine {
     pub fn new(initial_state: u32, states: States) -> TuringMachine {
-        TuringMachine { initial_state, states }
+        TuringMachine {
+            initial_state,
+            states,
+        }
     }
 
     pub fn execute(&self, input: &String) -> Result<Vec<Tape>, Vec<Tape>> {
@@ -23,43 +26,46 @@ impl TuringMachine {
 
         let mut status = Status {
             state_id: self.initial_state,
-            tapes: vec![tape]
+            tapes: vec![tape],
         };
 
         loop {
             let state = self.states.state_with_id(status.state_id).unwrap();
 
             if state.is_final_state() {
-                break
+                break;
             }
 
             let tape = status.tapes.last().unwrap();
             let option = state.find_transition_for(tape.read());
 
             if option.is_none() {
-                return Err(status.tapes)
+                return Err(status.tapes);
             }
 
             let transition = option.unwrap();
 
             let tapes = vec![
                 tape.write(transition.write),
-                tape.write(transition.write).mov(transition.movement)
+                tape.write(transition.write).mov(transition.movement),
             ];
 
             status = Status {
                 state_id: transition.destination_state,
-                tapes: status.tapes
+                tapes: status
+                    .tapes
                     .clone()
-                    .iter().chain(tapes.iter()).map(|t| t.to_owned())
-                    .collect()
+                    .iter()
+                    .chain(tapes.iter())
+                    .map(|t| t.to_owned())
+                    .collect(),
             }
         }
 
-        return Ok(status.tapes)
+        return Ok(status.tapes);
     }
 
-    pub fn dummy (&self) -> i32 {
+    pub fn dummy(&self) -> i32 {
         1
     }
 }
@@ -67,33 +73,52 @@ impl TuringMachine {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::state::State;
-    use crate::transitions::Transitions;
-    use crate::transition::Transition;
     use crate::movement::Movement;
+    use crate::state::State;
+    use crate::transition::Transition;
+    use crate::transitions::Transitions;
 
-    fn get_sample_turing_machine () -> TuringMachine {
-        TuringMachine::new(0, States::new(vec![
-            State::new(0, false, Transitions::new(vec![
-                Transition::new('0', 'X', Movement::RIGHT, 1),
-                Transition::new('Y', 'Y', Movement::RIGHT, 3),
-            ])),
-            State::new(1, false, Transitions::new(vec![
-                Transition::new('0', '0', Movement::RIGHT, 1),
-                Transition::new('Y', 'Y', Movement::RIGHT, 1),
-                Transition::new('1', 'Y', Movement::LEFT, 2),
-            ])),
-            State::new(2, false, Transitions::new(vec![
-                Transition::new('0', '0', Movement::LEFT, 2),
-                Transition::new('Y', 'Y', Movement::LEFT, 2),
-                Transition::new('X', 'X', Movement::RIGHT, 0),
-            ])),
-            State::new(3, false, Transitions::new(vec![
-                Transition::new('Y', 'Y', Movement::RIGHT, 3),
-                Transition::new('$', '$', Movement::LEFT, 4),
-            ])),
-            State::new(4, true, Transitions::new(vec![])),
-        ]))
+    fn get_sample_turing_machine() -> TuringMachine {
+        TuringMachine::new(
+            0,
+            States::new(vec![
+                State::new(
+                    0,
+                    false,
+                    Transitions::new(vec![
+                        Transition::new('0', 'X', Movement::RIGHT, 1),
+                        Transition::new('Y', 'Y', Movement::RIGHT, 3),
+                    ]),
+                ),
+                State::new(
+                    1,
+                    false,
+                    Transitions::new(vec![
+                        Transition::new('0', '0', Movement::RIGHT, 1),
+                        Transition::new('Y', 'Y', Movement::RIGHT, 1),
+                        Transition::new('1', 'Y', Movement::LEFT, 2),
+                    ]),
+                ),
+                State::new(
+                    2,
+                    false,
+                    Transitions::new(vec![
+                        Transition::new('0', '0', Movement::LEFT, 2),
+                        Transition::new('Y', 'Y', Movement::LEFT, 2),
+                        Transition::new('X', 'X', Movement::RIGHT, 0),
+                    ]),
+                ),
+                State::new(
+                    3,
+                    false,
+                    Transitions::new(vec![
+                        Transition::new('Y', 'Y', Movement::RIGHT, 3),
+                        Transition::new('$', '$', Movement::LEFT, 4),
+                    ]),
+                ),
+                State::new(4, true, Transitions::new(vec![])),
+            ]),
+        )
     }
 
     #[test]

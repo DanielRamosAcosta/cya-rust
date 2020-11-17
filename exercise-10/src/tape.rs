@@ -1,5 +1,5 @@
-use crate::transitions::Transitions;
 use crate::movement::Movement;
+use crate::transitions::Transitions;
 
 #[derive(Debug, Clone)]
 pub struct Tape {
@@ -38,7 +38,7 @@ impl Tape {
         }
     }
 
-    pub fn write (&self, char: char) -> Tape {
+    pub fn write(&self, char: char) -> Tape {
         let mut other = self.rail.clone();
 
         other[self.head] = char;
@@ -46,7 +46,7 @@ impl Tape {
         Tape::new(other, self.head)
     }
 
-    pub fn to_string (&self) -> String {
+    pub fn to_string(&self) -> String {
         format!(
             "...{}...\n...{}...",
             self.rail_to_string(),
@@ -95,8 +95,11 @@ mod tests {
 
         assert_eq!(tape.rail_to_string(), "000111");
         assert_eq!(tape.head_to_string(), "^     ");
-        assert_eq!(result, "...000111...
-...^     ...");
+        assert_eq!(
+            result,
+            "...000111...
+...^     ..."
+        );
     }
 
     #[test]

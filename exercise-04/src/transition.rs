@@ -5,8 +5,11 @@ pub struct Transition {
 }
 
 impl Transition {
-    pub fn new (symbol: char, destination_state: u32,) -> Transition {
-        Transition { symbol, destination_state }
+    pub fn new(symbol: char, destination_state: u32) -> Transition {
+        Transition {
+            symbol,
+            destination_state,
+        }
     }
 
     pub fn has_symbol(&self, symbol: char) -> bool {

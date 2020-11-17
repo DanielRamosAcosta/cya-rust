@@ -2,5 +2,5 @@
 pub enum Movement {
     LEFT,
     RIGHT,
-    STOP
+    STOP,
 }

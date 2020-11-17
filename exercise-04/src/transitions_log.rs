@@ -9,20 +9,21 @@ impl TransitionsLog {
     pub fn create() -> TransitionsLog {
         let transitions: Vec<TransitionLog> = Vec::new();
 
-        TransitionsLog {
-            transitions
-        }
+        TransitionsLog { transitions }
     }
 
     pub fn new(transitions: Vec<TransitionLog>) -> TransitionsLog {
-        TransitionsLog {
-            transitions
-        }
+        TransitionsLog { transitions }
     }
 
     pub fn append(&self, transition: TransitionLog) -> TransitionsLog {
         let aux = vec![transition];
-        let transitions = self.transitions.iter().copied().chain(aux.iter().copied()).collect();
+        let transitions = self
+            .transitions
+            .iter()
+            .copied()
+            .chain(aux.iter().copied())
+            .collect();
         return TransitionsLog::new(transitions);
     }
 
@@ -41,12 +42,14 @@ impl TransitionsLog {
         self.transitions.len()
     }
 
-    pub fn to_string (&self) -> String {
-         TransitionsLog::get_header() + &self.transitions
-            .iter()
-            .map(|&transition| transition.to_string())
-            .collect::<Vec<_>>()
-            .join("\n")
+    pub fn to_string(&self) -> String {
+        TransitionsLog::get_header()
+            + &self
+                .transitions
+                .iter()
+                .map(|&transition| transition.to_string())
+                .collect::<Vec<_>>()
+                .join("\n")
     }
 
     fn get_header() -> String {
