@@ -1,5 +1,4 @@
 use crate::state::State;
-use crate::transitions::Transitions;
 
 pub struct States {
     states: Vec<State>,

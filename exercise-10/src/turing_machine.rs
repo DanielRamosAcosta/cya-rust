@@ -1,5 +1,3 @@
-use crate::movement::Movement;
-use crate::state::State;
 use crate::states::States;
 use crate::tape::Tape;
 

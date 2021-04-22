@@ -1,6 +1,5 @@
 use crate::state::State;
 use crate::status::Status;
-use crate::transition::Transition;
 use crate::transition_log::TransitionLog;
 use crate::transitions_log::TransitionsLog;
 
@@ -101,6 +100,7 @@ impl Dfa {
 mod tests {
     use super::*;
     use crate::transitions::Transitions;
+    use crate::transition::Transition;
 
     fn get_sample_dfa() -> Dfa {
         Dfa::new(

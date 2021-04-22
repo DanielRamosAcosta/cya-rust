@@ -1,4 +1,3 @@
-use crate::transition_log::TransitionLog;
 use crate::transitions_log::TransitionsLog;
 
 #[derive(Debug, Clone)]
@@ -35,6 +34,7 @@ impl Status {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::transition_log::TransitionLog;
 
     #[test]
     fn it_shows_the_input_string() {

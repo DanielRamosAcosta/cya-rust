@@ -1,5 +1,4 @@
 use crate::movement::Movement;
-use crate::transitions::Transitions;
 
 #[derive(Debug, Clone)]
 pub struct Tape {
@@ -59,7 +58,7 @@ impl Tape {
             .chars()
             .into_iter()
             .enumerate()
-            .map(|(i, x)| i)
+            .map(|(i, _x)| i)
             .map(|x| self.index_to_symbol(&x))
             .collect::<Vec<String>>()
             .join("")

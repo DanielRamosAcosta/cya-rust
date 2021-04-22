@@ -1,4 +1,3 @@
-use crate::transition::Transition;
 use crate::transitions::Transitions;
 
 pub struct State {
@@ -48,6 +47,7 @@ impl State {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::transition::Transition;
 
     fn get_sample_state() -> State {
         State::new(
